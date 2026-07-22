@@ -1,7 +1,18 @@
 pipeline {
     agent any
+    environment {
+        IMAGE_NAME = "devops-node-app"
+        CONTAINER_NAME = "devops-container"
+        IMAGE_TAG = "${BUILD_NUMBER}"
+    }
 
     stages {
+
+        stage('checkout') {
+            steps {
+                checkout scm
+            }
+        }
 
         stage('Clone') {
             steps {
@@ -29,8 +40,8 @@ pipeline {
             steps {
                 dir('app') {
                     sh '''
-                        docker rmi -f devops-node-app:latest || true
-                        docker build -t devops-node-app:latest .
+                        docker rmi -f ${IMAGE_NAME}:latest || true
+                        docker build -t ${IMAGE_NAME}:latest .
                     '''
                 }
             }
@@ -39,8 +50,8 @@ pipeline {
         stage('Deploy Container') {
             steps {
                 sh '''
-                    docker rm -f devops-container || true
-                    docker run -d --name devops-container -p 3000:3000 devops-node-app:latest
+                    docker rm -f ${CONTAINER_NAME} || true
+                    docker run -d --name ${CONTAINER_NAME} -p 3000:3000 ${IMAGE_NAME}:latest
                 '''
             }
         }
