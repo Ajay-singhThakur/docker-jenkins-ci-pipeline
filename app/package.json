@@ -1,0 +1,17 @@
+{
+  "name": "docker-jenkins-ci-pipeline",
+  "version": "1.0.0",
+  "description": "nodejs application for docker and jenkins ci pipeline",
+  "main": "server.js",
+  "scripts": {
+    "test": "node test.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
